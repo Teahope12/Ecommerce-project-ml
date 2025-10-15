@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ShopContext } from "../context/ShopContext";
 import OrderProduct from "../component/OrderProduct";
+import { motion } from "framer-motion";
 
 function Orders() {
   const navigate = useNavigate();
@@ -27,10 +28,8 @@ function Orders() {
             },
           }
         );
-       
-        const orderDetails = response.data.data;
 
-        // Extract and flatten the cart items
+        const orderDetails = response.data.data;
         const flattened = [];
 
         orderDetails.forEach((order) => {
@@ -43,7 +42,8 @@ function Orders() {
             });
           });
         });
-        setFlatOrders(flattened);        
+
+        setFlatOrders(flattened);
       } catch (error) {
         console.error(
           "Error fetching orders:",
@@ -54,18 +54,64 @@ function Orders() {
 
     fetchOrders();
   }, []);
+
   return (
-    <div className="p-4">
-      <h2 className="text-xl font-bold mb-4">Your Orders</h2>
-      {flatOrders.map((item, index) => (
-        <OrderProduct
-          key={index}
-          productId={item.productId}
-          size={item.size}
-          quantity={item.quantity}
-        />
-      ))}
-    </div>
+    <motion.div
+      className="bg-gradient-to-br from-indigo-100 via-pink-100 to-rose-100 py-12 mt-10 rounded-3xl shadow-md"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.6 }}
+    >
+      <div className="max-w-5xl mx-auto px-4 lg:px-6">
+        <motion.h2
+          className="text-3xl font-bold mb-8 text-center text-gray-800"
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          Your Orders
+        </motion.h2>
+
+        {flatOrders.length === 0 ? (
+          <motion.p
+            className="text-center text-lg text-gray-600"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.4 }}
+          >
+            You haven't placed any orders yet.
+          </motion.p>
+        ) : (
+          <motion.div
+            className="space-y-6"
+            initial="hidden"
+            animate="visible"
+            variants={{
+              hidden: { opacity: 0 },
+              visible: {
+                opacity: 1,
+                transition: { staggerChildren: 0.1 },
+              },
+            }}
+          >
+            {flatOrders.map((item, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4 }}
+              >
+                <OrderProduct
+                  productId={item.productId}
+                  size={item.size}
+                  quantity={item.quantity}
+                />
+              </motion.div>
+            ))}
+          </motion.div>
+        )}
+      </div>
+    </motion.div>
   );
 }
 

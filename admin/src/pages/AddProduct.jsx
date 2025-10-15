@@ -52,8 +52,6 @@ const AddProduct = () => {
 
       if (response.data.success) {
         toast.success("Product added Successfully");
-
-        // Reset form
         setProductName("");
         setProductDescription("");
         setProductCategory("Women");
@@ -76,19 +74,21 @@ const AddProduct = () => {
   };
 
   return (
-    <div className="p-6 bg-gray-100 w-full min-h-screen flex justify-center items-center">
-      <form onSubmit={handleSubmit} className="bg-white shadow-md rounded p-8 w-full">
-        <h2 className="text-2xl font-bold mb-4 text-center">Add Product</h2>
+    <div className="p-6 bg-gradient-to-br from-indigo-100 via-pink-100 to-rose-100 w-full min-h-screen flex justify-center items-center">
+      <form onSubmit={handleSubmit} className="bg-white shadow-lg rounded-3xl p-8 w-full">
+        <h2 className="text-3xl font-bold mb-6 text-center text-gray-800 font-serif">
+          Add Product
+        </h2>
 
         {/* Image Upload */}
-        <div className="grid grid-cols-4 gap-4 mb-4">
+        <div className="grid grid-cols-4 gap-4 mb-6">
           {[1, 2, 3, 4].map((num) => {
             const imageState = [image1, image2, image3, image4][num - 1];
             const setImageState = [setImages1, setImages2, setImages3, setImages4][num - 1];
             return (
               <label
                 key={num}
-                className="flex flex-col items-center justify-center h-20 bg-gray-200 border rounded cursor-pointer"
+                className="flex flex-col items-center justify-center h-24 bg-gray-200 border rounded-xl cursor-pointer hover:bg-indigo-100 transition"
               >
                 <input
                   type="file"
@@ -96,7 +96,9 @@ const AddProduct = () => {
                   className="hidden"
                   onChange={(e) => setImageState(e.target.files[0])}
                 />
-                <span className="text-sm">{imageState ? imageState.name : "Upload"}</span>
+                <span className="text-sm text-gray-700">
+                  {imageState ? imageState.name : "Upload"}
+                </span>
               </label>
             );
           })}
@@ -104,11 +106,11 @@ const AddProduct = () => {
 
         {/* Product Name */}
         <div className="mb-4">
-          <label className="block text-sm font-medium">Product Name</label>
+          <label className="block text-sm font-medium text-gray-700">Product Name</label>
           <input
             type="text"
             value={productName}
-            className="w-full p-2 border rounded"
+            className="w-full p-2 border rounded-xl"
             placeholder="Type here"
             onChange={(e) => setProductName(e.target.value)}
             required
@@ -117,10 +119,10 @@ const AddProduct = () => {
 
         {/* Product Description */}
         <div className="mb-4">
-          <label className="block text-sm font-medium">Product Description</label>
+          <label className="block text-sm font-medium text-gray-700">Product Description</label>
           <textarea
             value={productDescription}
-            className="w-full p-2 border rounded"
+            className="w-full p-2 border rounded-xl"
             placeholder="Write content here"
             rows="3"
             onChange={(e) => setProductDescription(e.target.value)}
@@ -131,11 +133,11 @@ const AddProduct = () => {
         {/* Category & Subcategory */}
         <div className="flex gap-4 mb-4">
           <div className="w-1/2">
-            <label className="block text-sm font-medium">Product Category</label>
+            <label className="block text-sm font-medium text-gray-700">Product Category</label>
             <select
               value={productCategory}
               onChange={(e) => setProductCategory(e.target.value)}
-              className="w-full p-2 border rounded"
+              className="w-full p-2 border rounded-xl"
             >
               <option>Women</option>
               <option>Men</option>
@@ -145,11 +147,11 @@ const AddProduct = () => {
           </div>
 
           <div className="w-1/2">
-            <label className="block text-sm font-medium">Sub Category</label>
+            <label className="block text-sm font-medium text-gray-700">Sub Category</label>
             <select
               value={subCategory}
               onChange={(e) => setSubCategory(e.target.value)}
-              className="w-full p-2 border rounded"
+              className="w-full p-2 border rounded-xl"
             >
               <option>Topwear</option>
               <option>Bottomwear</option>
@@ -161,28 +163,30 @@ const AddProduct = () => {
 
         {/* Price */}
         <div className="mb-4">
-          <label className="block text-sm font-medium">Product Price</label>
+          <label className="block text-sm font-medium text-gray-700">Product Price</label>
           <input
             type="number"
             value={productPrice}
             onChange={(e) => setProductPrice(e.target.value)}
-            className="w-full p-2 border rounded"
+            className="w-full p-2 border rounded-xl"
             placeholder="25"
             required
           />
         </div>
 
         {/* Sizes */}
-        <div className="mb-4">
-          <label className="block text-sm font-medium mb-2">Product Sizes</label>
-          <div className="flex gap-2">
+        <div className="mb-6">
+          <label className="block text-sm font-medium text-gray-700 mb-2">Product Sizes</label>
+          <div className="flex flex-wrap gap-2">
             {["S", "M", "L", "XL", "XXL", "10", "None"].map((size) => (
               <button
                 type="button"
                 key={size}
                 onClick={() => handleSizeClick(size)}
-                className={`px-4 py-2 border rounded ${
-                  selectedSizes.includes(size) ? "bg-indigo-500 text-white" : "bg-gray-200"
+                className={`px-4 py-2 border rounded-xl transition ${
+                  selectedSizes.includes(size)
+                    ? "bg-indigo-500 text-white"
+                    : "bg-gray-200 hover:bg-indigo-100"
                 }`}
               >
                 {size}
@@ -192,28 +196,27 @@ const AddProduct = () => {
         </div>
 
         {/* Bestseller */}
-        <div className="mb-4">
-          <label className="flex items-center">
+        <div className="mb-6">
+          <label className="flex items-center text-gray-700">
             <input
               type="checkbox"
               checked={isBestseller}
               className="mr-2"
               onChange={(e) => setIsBestseller(e.target.checked)}
             />
-            Add to bestseller
+            Mark as Bestseller
           </label>
         </div>
 
         {/* Submit */}
         <button
           type="submit"
-          className="w-full bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700"
+          className="w-full bg-indigo-600 text-white py-2 rounded-full hover:bg-indigo-700 transition duration-300"
           disabled={loading}
         >
           {loading ? "Adding, Please Wait..." : "ADD"}
         </button>
 
-        {/* Toast container */}
         <ToastContainer position="top-right" autoClose={3000} />
       </form>
     </div>

@@ -21,8 +21,6 @@ function ListProduct() {
 
   const deleteProduct = async (id) => {
     try {
-      console.log();
-      
       const response = await axios.post(backendUrl + "/api/product/remove", {
         id,
       });
@@ -31,7 +29,7 @@ function ListProduct() {
         fetchProduct();
       }
     } catch (error) {
-      window.alert("svffsdgsdgfsfg" + error);
+      window.alert("Error deleting product: " + error.message);
     }
   };
 
@@ -40,10 +38,13 @@ function ListProduct() {
   }, []);
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">All Products List</h1>
+    <div className="container mx-auto p-6 bg-gradient-to-br from-indigo-100 via-pink-100 to-rose-100 rounded-3xl shadow-md">
+      <h1 className="text-3xl font-bold mb-6 text-center text-gray-800 font-serif">
+        All Products List
+      </h1>
+
       {/* Header for larger screens */}
-      <div className="hidden lg:grid grid-cols-5 gap-4 text-center font-bold bg-gray-100 p-2 rounded-md mb-4">
+      <div className="hidden lg:grid grid-cols-5 gap-4 text-center font-bold bg-white p-3 rounded-xl shadow mb-6">
         <div>Image</div>
         <div>Name</div>
         <div>Category</div>
@@ -56,7 +57,7 @@ function ListProduct() {
         list.map((item, index) => (
           <div
             key={index}
-            className="grid lg:grid-cols-5 grid-cols-1 gap-4 items-center p-4 border rounded-md mb-2"
+            className="grid lg:grid-cols-5 grid-cols-1 gap-4 items-center p-4 bg-white border rounded-2xl shadow hover:shadow-lg transition duration-300 mb-4"
           >
             {/* Image */}
             <div className="flex justify-center lg:block">
@@ -64,15 +65,15 @@ function ListProduct() {
                 <img
                   src={item.images[0].url}
                   alt={item.name || "Product image"}
-                  className="w-16 h-16 object-cover rounded-md"
+                  className="w-16 h-16 object-cover rounded-xl"
                 />
               ) : (
-                <p>No image</p>
+                <p className="text-gray-500">No image</p>
               )}
             </div>
 
             {/* Name */}
-            <div className="text-center lg:text-left text-gray-700">
+            <div className="text-center lg:text-left text-gray-700 font-medium">
               {item.name}
             </div>
 
@@ -82,17 +83,17 @@ function ListProduct() {
             </div>
 
             {/* Price */}
-            <div className="text-center lg:text-left text-gray-700 font-bold">
-              Rs. {item.price}
+            <div className="text-center lg:text-left text-indigo-600 font-bold">
+              ₹{item.price}
             </div>
 
             {/* Action */}
             <div className="flex justify-center lg:block">
               <button
-                className="text-red-500 hover:text-red-700 font-bold"
+                className="text-red-500 hover:text-red-700 font-bold transition duration-200"
                 onClick={() => deleteProduct(item._id)}
               >
-                X
+                ✖
               </button>
             </div>
           </div>
