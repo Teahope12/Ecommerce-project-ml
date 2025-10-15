@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: image-embed-service
+    env: python
+    region: oregon  # or your preferred Render region
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn -k uvicorn.workers.UvicornWorker ml_service.ml_service:app"
+    plan: starter  # can be free or starter
+    envVars:
+      - key: HF_CLIP_MODEL
+        value: "openai/clip-vit-base-patch32"
+      - key: MAX_BATCH_SIZE
+        value: "8"
+      - key: REQUEST_TIMEOUT_SEC
+        value: "30"
+      - key: LOG_LEVEL
+        value: "INFO"
