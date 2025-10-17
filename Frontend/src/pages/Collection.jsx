@@ -54,7 +54,7 @@ function Collection() {
     try {
       const fd = new FormData();
       fd.append("image", imageFile);
-      const resp = await fetch(`http://localhost:3000/api/product/search-image?k=8`, {
+      const resp = await fetch(`https://ecommerce-project-ml-backend.onrender.com/api/product/search-image?k=8`, {
         method: "POST",
         body: fd,
       });
