@@ -60,6 +60,27 @@ Transformers library for state-of-the-art NLP models
 
 Pillow (PIL) for comprehensive image processing
 
+Advanced AI Integration: Jina AI Framework
+Jina AI - Cloud-native neural search framework for multimodal data processing​
+
+Neural Search Capabilities - Semantic search across text, images, and multimedia content​
+
+Multimodal Embeddings - State-of-the-art jina-embeddings-v4 with 32K+ token context windows​
+
+Distributed Architecture - Scalable microservices with gRPC, HTTP, and WebSocket support​
+
+Production-Ready Deployment - Container-native design with Kubernetes orchestration​
+
+🤖 AI-Powered Features
+Semantic Product Search
+The platform leverages Jina AI's neural search framework to enable intelligent product discovery beyond traditional keyword matching. Users can search using natural language queries like "comfortable summer shoes for hiking" and receive contextually relevant results.​
+
+Image-to-Product Matching
+Integration with OpenAI CLIP and Jina's multimodal embeddings allows customers to upload images and find similar products in the catalog. This feature uses advanced vector similarity matching for accurate visual search.​
+
+Intelligent Recommendations
+The ML service processes user behavior patterns and product embeddings to generate personalized recommendations using Jina's distributed computing capabilities.​
+
 🔋 System Requirements
 Node.js version 18 or higher with npm package manager
 
@@ -68,6 +89,8 @@ Python 3.10+ with pip installer
 MongoDB database (local installation or cloud service)
 
 Cloudinary account with API credentials
+
+Jina AI account for advanced neural search features (optional)
 
 🔐 Configuration Management
 API Server Configuration
@@ -93,6 +116,10 @@ Cloudinary_API_SECRETE=your-cloudinary-api-secret
 STRIPE_SECRET_KEY=sk_test_your_stripe_key
 RAZORPAY_KEY_ID=your_razorpay_key_id
 RAZORPAY_KEY_SECRET=your_razorpay_secret
+
+# Jina AI Integration (Optional)
+JINA_API_KEY=your-jina-api-key
+JINA_BASE_URL=https://api.jina.ai/v1
 ```
 
 ML Service Configuration
@@ -103,6 +130,28 @@ HF_CLIP_MODEL=openai/clip-vit-base-patch32
 MAX_BATCH_SIZE=8
 REQUEST_TIMEOUT_SEC=30
 LOG_LEVEL=INFO
+```
+
+Jina AI Integration Setup
+The backend includes optional Jina AI integration for advanced embeddings and reranking capabilities:
+
+```javascript
+// Backend/utils/jinaEmbeddings.js
+import OpenAI from "openai";
+
+const client = new OpenAI({
+  apiKey: process.env.JINA_API_KEY,
+  baseURL: process.env.JINA_BASE_URL || "https://api.jina.ai/v1",
+});
+
+export async function embedTexts(texts) {
+  const input = Array.isArray(texts) ? texts : [texts];
+  const response = await client.embeddings.create({
+    model: "jina-embeddings-v2-base-en",
+    input,
+  });
+  return response.data.map((d) => d.embedding);
+}
 ```
 
 🚀 Development Workflow
@@ -200,6 +249,8 @@ AI-Powered Features
 - System Health: GET /health
 - Image Embedding: POST /embed with { image_url: string }
 - Batch Processing: POST /embed_batch with { image_urls: string[] }
+- Jina Embeddings: POST /api/embeddings/embed with { inputs: string | string[] }
+- Semantic Reranking: POST /api/rerank with { query: string, documents: string[] }
 
 🛠️ Development Commands
 JavaScript Applications
@@ -239,8 +290,13 @@ ML Service Performance
 - Initial CLIP model download may take several minutes
 - Consider using smaller models for development: openai/clip-vit-small-patch32
 
+Jina AI Integration Issues
+- Verify JINA_API_KEY is valid and has sufficient quota
+- Check network connectivity to Jina AI services
+- Monitor API rate limits for production deployments
+
 📝 Additional Notes
-This platform integrates modern payment processing through Stripe and Razorpay. The ML service provides intelligent product recommendations using state-of-the-art computer vision models. All frontend applications utilize Tailwind CSS for consistent, responsive design across devices.
+This platform integrates modern payment processing through Stripe and Razorpay. The ML service provides intelligent product recommendations using state-of-the-art computer vision models. Jina AI integration enables advanced semantic search capabilities with support for multimodal data processing and distributed computing architecture. All frontend applications utilize Tailwind CSS for consistent, responsive design across devices.​
 
 📄 License
 This project is proprietary and intended for educational and demonstration purposes.
