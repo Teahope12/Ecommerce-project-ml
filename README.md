@@ -295,8 +295,11 @@ Jina AI Integration Issues
 - Check network connectivity to Jina AI services
 - Monitor API rate limits for production deployments
 
+Image search is present in Products page
+
 📝 Additional Notes
 This platform integrates modern payment processing through Stripe and Razorpay. The ML service provides intelligent product recommendations using state-of-the-art computer vision models. Jina AI integration enables advanced semantic search capabilities with support for multimodal data processing and distributed computing architecture. All frontend applications utilize Tailwind CSS for consistent, responsive design across devices.​
 
 📄 License
 This project is proprietary and intended for educational and demonstration purposes.
+
